@@ -55,16 +55,16 @@ public class PizzaDAO {
 	}
 
 	// AJOUTER
-	static public void ajouterPizza(Pizza pizza) throws SQLException, ClassNotFoundException {
-
-		Connection conn = DatabaseConnection.initializeDatabase();
-		PreparedStatement ps = conn.prepareStatement("insert into t_pizza(DesignPizz,TarifPizz) values (?,?)");
-
-		ps.setString(1, pizza.getDesignPizz());
-		ps.setDouble(2, pizza.getPrice());
-		ps.executeUpdate();
-
-	}
+//	static public void ajouterPizza(Pizza pizza) throws SQLException, ClassNotFoundException {
+//
+//		Connection conn = DatabaseConnection.initializeDatabase();
+//		PreparedStatement ps = conn.prepareStatement("insert into t_pizza(DesignPizz,TarifPizz) values (?,?)");
+//
+//		ps.setString(1, pizza.getDesignPizz());
+//		ps.setDouble(2, pizza.getPrice());
+//		ps.executeUpdate();
+//
+//	}
 
 	// SUPPRESSION
 	static public Pizza deletePizzaById(int pizzaid) throws SQLException, ClassNotFoundException {
@@ -84,24 +84,24 @@ public class PizzaDAO {
 
 	}
 
-	// MODIFIER
+	// MODIFIER ET AJOUTER
 	public static void saveOrUpdate(Pizza pizza) throws Exception {
 		int id = pizza.getId();
 		
 		Connection conn = DatabaseConnection.initializeDatabase();
 		PreparedStatement ps;
 		if(id!=0) {
-			ps = conn.prepareStatement("update t_pizza set DesignPizz=?,TarifPizz=?,Image=? where id=?");	
-			ps.setInt(4, pizza.getId());
+			ps = conn.prepareStatement("update t_pizza set DesignPizz=?,TarifPizz=? where id=?");	
+			ps.setInt(3, pizza.getId());
 
 		}else {
-			ps = conn.prepareStatement("insert into t_pizza(DesignPizz,TarifPizz,Image) values (?,?,?)");
+			ps = conn.prepareStatement("insert into t_pizza(DesignPizz,TarifPizz) values (?,?)");
 
 		}
 
 		ps.setString(1, pizza.getDesignPizz());
 		ps.setDouble(2, pizza.getPrice());
-		ps.setString(3, pizza.getImage());
+		//ps.setString(3, pizza.getImage());
 
 		ps.executeUpdate();
 	}
